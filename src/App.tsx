@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+
+  const [color, setColor] = useState('blue');
+
+
+  const buttonStyle = {
+    backgroundColor: color,
+    color:'white',
+    width:'10vw',
+    height:'10vh'
+  };
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <label htmlFor="name">Type a number  </label>
+      <input type="text" onChange={(value)=>{
+        if(Number(value.target.value) < 10)
+          setColor('blue');
+        else
+          setColor('red');
+      }}></input>
+      <br/>
+
+      <button style={buttonStyle}>Color</button>
+    </main>
   );
 }
 
