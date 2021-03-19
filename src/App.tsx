@@ -14,8 +14,8 @@ function App() {
   
   return (
     <main>
-      <label htmlFor="name">Type a number  </label>
-      <input type="text" onChange={(value)=>{
+      <label htmlFor="numberInput">Type a number </label>
+      <input id="numberInput" type="text" onChange={(value)=>{
         if(Number(value.target.value) < 10)
           setColor('blue');
         else
