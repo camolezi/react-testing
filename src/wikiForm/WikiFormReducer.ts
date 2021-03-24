@@ -1,36 +1,26 @@
-interface WikiSearchResult {
-  wordCount: number;
-  title: string;
-}
-
-export interface WikiFormState {
-  searchText: string;
-  searchResult: WikiSearchResult;
-}
-
-export enum WikiFormActionsTypes {
-  CLICKED_SEARCH_BUTTON = 'CLICKED_SEARCH_BUTTON',
-  RECEIVED_WIKIPEDIA_DATA = 'RECEIVED_WIKIPEDIA_DATA',
-}
-
-export interface clickedSearchButton {
-  type: WikiFormActionsTypes.CLICKED_SEARCH_BUTTON;
-  payload: string;
-}
-
-export interface receivedWikipediaData {
-  type: WikiFormActionsTypes.RECEIVED_WIKIPEDIA_DATA;
-  payload: WikiSearchResult;
-}
-
-export type WikiFormActions = clickedSearchButton | receivedWikipediaData;
+import {
+  WikiFormActions,
+  WikiFormActionsTypes,
+  WikiFormState,
+  WikiSearchResult,
+} from './wikiFormTypes';
 
 function WikiFormReducer(
   state: WikiFormState,
   action: WikiFormActions
 ): WikiFormState {
   console.log(action);
-  return state;
+  switch (action.type) {
+    case WikiFormActionsTypes.RECEIVED_WIKIPEDIA_DATA: {
+      const payload = (action.payload as unknown) as WikiSearchResult;
+
+      if (payload.wordCount > 5000) return { ...state, resultColor: 'red' };
+      return { ...state, resultColor: 'green' };
+    }
+
+    default:
+      return state;
+  }
 }
 
 export default WikiFormReducer;

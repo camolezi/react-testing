@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useWikiForm from './useWikiForm';
-import { WikiFormActionsTypes } from './WikiFormReducer';
+import { WikiFormActionsTypes } from './wikiFormTypes';
 
 function WikiForm(): JSX.Element {
   const [text, setText] = useState('');

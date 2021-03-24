@@ -1,9 +1,10 @@
 import React, { useCallback, useReducer } from 'react';
-import WikiFormReducer, {
+import WikiFormReducer from './WikiFormReducer';
+import {
   WikiFormActions,
   WikiFormActionsTypes,
   WikiFormState,
-} from './WikiFormReducer';
+} from './wikiFormTypes';
 
 const initialState: WikiFormState = {
   searchText: '',
@@ -11,6 +12,7 @@ const initialState: WikiFormState = {
     wordCount: 0,
     title: '',
   },
+  resultColor: 'white',
 };
 
 function getUrlWikipedia(keyword: string) {
@@ -30,7 +32,7 @@ function useWikiForm(): [WikiFormState, React.Dispatch<WikiFormActions>] {
   const [wikiForm, dispatch] = useReducer(WikiFormReducer, initialState);
 
   const dispatchUsingMiddleware = useCallback(
-    async (action: WikiFormActions) => {
+    (action: WikiFormActions) => {
       if (action.type === WikiFormActionsTypes.CLICKED_SEARCH_BUTTON) {
         fetchWikipediaData(action.payload).then((payload) =>
           dispatch({
