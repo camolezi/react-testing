@@ -2,23 +2,34 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
+import wikiServer from '../mocks/wiki';
 
-test('button should be blue if input is smaller than 10', () => {
+beforeAll(() => wikiServer.listen());
+
+afterEach(() => wikiServer.resetHandlers());
+
+afterAll(() => wikiServer.close());
+
+test('text should be green if searched article wordcount is smaller than 5000', async () => {
   render(<App />);
 
-  const input = screen.getByLabelText('Type a number');
-  userEvent.type(input, '5');
+  const input = screen.getByLabelText('Type something', { exact: false });
+  userEvent.type(input, 'house');
 
-  const button = screen.getByRole('button', { name: 'Color' });
-  expect(button).toHaveStyle({ backgroundColor: 'blue' });
+  userEvent.click(screen.getByRole('button'));
+
+  const text = await screen.findByRole('heading');
+  expect(text).toHaveStyle({ backgroundColor: 'green' });
 });
 
-test('button should be red if input is greater than 10', () => {
+test('text should be red if searched article wordcount is greater than 5000', async () => {
   render(<App />);
 
-  const input = screen.getByLabelText('Type a number');
-  userEvent.type(input, '11');
+  const input = screen.getByLabelText('Type something', { exact: false });
+  userEvent.type(input, 'color');
 
-  const button = screen.getByRole('button', { name: 'Color' });
-  expect(button).toHaveStyle({ backgroundColor: 'red' });
+  userEvent.click(screen.getByRole('button'));
+
+  const text = await screen.findByRole('heading');
+  expect(text).toHaveStyle({ backgroundColor: 'red' });
 });
