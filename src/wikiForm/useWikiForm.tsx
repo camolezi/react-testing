@@ -13,6 +13,7 @@ const initialState: WikiFormState = {
     title: '',
   },
   resultColor: 'white',
+  resultText: '',
 };
 
 function getUrlWikipedia(keyword: string) {
@@ -34,12 +35,16 @@ function useWikiForm(): [WikiFormState, React.Dispatch<WikiFormActions>] {
   const dispatchUsingMiddleware = useCallback(
     (action: WikiFormActions) => {
       if (action.type === WikiFormActionsTypes.CLICKED_SEARCH_BUTTON) {
-        fetchWikipediaData(action.payload).then((payload) =>
-          dispatch({
-            type: WikiFormActionsTypes.RECEIVED_WIKIPEDIA_DATA,
-            payload,
-          })
-        );
+        fetchWikipediaData(action.payload)
+          .then((payload) =>
+            dispatch({
+              type: WikiFormActionsTypes.RECEIVED_WIKIPEDIA_DATA,
+              payload,
+            })
+          )
+          .catch((e) => {
+            console.error(`failed fetch${e}`);
+          });
       }
 
       dispatch(action);

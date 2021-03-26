@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import ShowSearchResult from './ShowSearchResult';
 import useWikiForm from './useWikiForm';
 import { WikiFormActionsTypes } from './wikiFormTypes';
 
 function WikiForm(): JSX.Element {
   const [text, setText] = useState('');
-  const [, dispatch] = useWikiForm();
+  const [searchState, dispatch] = useWikiForm();
 
   return (
     <>
@@ -29,6 +30,10 @@ function WikiForm(): JSX.Element {
       >
         Search on Wikipedia
       </button>
+
+      {searchState.resultColor !== 'white' && (
+        <ShowSearchResult color={searchState.resultColor} />
+      )}
     </>
   );
 }

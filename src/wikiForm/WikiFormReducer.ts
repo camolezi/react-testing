@@ -9,7 +9,6 @@ function WikiFormReducer(
   state: WikiFormState,
   action: WikiFormActions
 ): WikiFormState {
-  console.log(action);
   switch (action.type) {
     case WikiFormActionsTypes.RECEIVED_WIKIPEDIA_DATA: {
       const payload = (action.payload as unknown) as WikiSearchResult;
