@@ -17,6 +17,7 @@ const wikiMockHandler = rest.get(
   'https://en.wikipedia.org/w/api.php',
   (req, res, ctx) => {
     const searchKeyword = req.url.searchParams.get('srsearch');
+
     return res(
       ctx.status(200),
       ctx.json({

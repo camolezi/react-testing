@@ -7,7 +7,6 @@ export interface WikiFormState {
   searchText: string;
   searchResult: WikiSearchResult;
   resultColor: string;
-  resultText: string;
 }
 
 export enum WikiFormActionsTypes {
